@@ -1,0 +1,10 @@
+{
+"name": "testAPI",
+"version": "0.0.1",
+"description": "JSON API",
+"main": "index.js",
+"scripts": {
+"test": "echo \"NODE_ERROR\" && exit 1"
+},
+"author": "DevNULL",
+"license": "GNU General Public License"}

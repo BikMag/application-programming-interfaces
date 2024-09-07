@@ -1,0 +1,21 @@
+{
+  "name": "pract8app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.11.2",
+    "@grpc/proto-loader": "^0.7.13",
+    "express": "^4.19.2",
+    "express-handlebars": "^8.0.1",
+    "hbs": "^4.2.0",
+    "qrpc": "^1.1.6",
+    "uuid": "^10.0.0"
+  }
+}

@@ -1,0 +1,208 @@
+openapi: 3.0.3
+info:
+  title: Meat Store API
+  description: |
+    This is a sample API for an online meat store based on the OpenAPI 3.0 specification.
+    You can manage meat products, place orders, and manage user accounts through this API.
+  version: 1.0.0
+servers:
+  - url: https://meatstore.example.com/api/v1
+tags:
+  - name: product
+    description: Everything about meat products
+  - name: order
+    description: Manage orders
+  - name: user
+    description: User management
+
+paths:
+  /product:
+    get:
+      tags:
+        - product
+      summary: Get a list of meat products
+      description: Retrieve a list of available meat products
+      operationId: getProducts
+      responses:
+        '200':
+          description: A list of meat products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid request
+
+    post:
+      tags:
+        - product
+      summary: Add a new meat product
+      description: Add a new meat product to the store
+      operationId: addProduct
+      requestBody:
+        description: Meat product to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        '201':
+          description: Product created successfully
+        '400':
+          description: Invalid input
+
+  /product/{productId}:
+    get:
+      tags:
+        - product
+      summary: Get a product by ID
+      description: Retrieve details of a specific meat product by its ID
+      operationId: getProductById
+      parameters:
+        - name: productId
+          in: path
+          description: ID of the product to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+
+  /order:
+    post:
+      tags:
+        - order
+      summary: Place a new order
+      description: Place a new order for meat products
+      operationId: placeOrder
+      requestBody:
+        description: Order details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      responses:
+        '201':
+          description: Order placed successfully
+        '400':
+          description: Invalid input
+
+  /order/{orderId}:
+    get:
+      tags:
+        - order
+      summary: Get order by ID
+      description: Retrieve order details by ID
+      operationId: getOrderById
+      parameters:
+        - name: orderId
+          in: path
+          description: ID of the order to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Order not found
+
+  /user:
+    post:
+      tags:
+        - user
+      summary: Create a new user
+      description: Register a new user account
+      operationId: createUser
+      requestBody:
+        description: User details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '201':
+          description: User created successfully
+        '400':
+          description: Invalid input
+
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - name
+        - price
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Ribeye Steak
+        category:
+          type: string
+          example: Beef
+        price:
+          type: number
+          format: float
+          example: 24.99
+        stock:
+          type: integer
+          example: 100
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1001
+        productId:
+          type: integer
+          example: 1
+        quantity:
+          type: integer
+          example: 2
+        totalPrice:
+          type: number
+          format: float
+          example: 49.98
+        status:
+          type: string
+          enum:
+            - placed
+            - shipped
+            - delivered
+          example: placed
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: meatlover
+        email:
+          type: string
+          example: meatlover@example.com
+        password:
+          type: string
+          example: strongpassword123
